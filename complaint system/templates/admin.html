@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        /* Page Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Status badges */
+        .status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .pending {
+            background: orange;
+        }
+
+        .resolved {
+            background: green;
+        }
+
+        /* Action buttons */
+        .btn {
+            padding: 6px 12px;
+            border-radius: 10px;
+            margin: 2px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .resolve {
+            background: #28a745;
+            color: white;
+        }
+
+        .delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+
+        /* Table animation */
+        table {
+            animation: fadeIn 1s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>📊 Admin Dashboard</h1>
+        <a href="/" class="back-btn">⬅ Back</a>
+    </div>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Complaint</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for row in data %}
+        <tr>
+            <td>{{row[1]}}</td>
+
+            <td>{{row[2]}}</td>
+
+            <!-- Priority with colors -->
+            <td class="{{row[3]|lower}}">
+                {{row[3]}}
+            </td>
+
+            <!-- Status badge -->
+            <td>
+                <span class="status {{row[4]|lower}}">
+                    {{row[4]}}
+                </span>
+            </td>
+
+            <!-- Buttons -->
+            <td>
+                <a href="/resolve/{{row[0]}}" class="btn resolve">✔ Resolve</a>
+                <a href="/delete/{{row[0]}}" class="btn delete">🗑 Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>
